@@ -19,6 +19,6 @@ Route::get('/', function () {
 Route::get('/detials', function () {
     return view('front.detials');
 });
-Route::get('/category', function () {
+Route::get('/categories', function () {
     return view('front.category');
 });
