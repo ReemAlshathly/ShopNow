@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\CategoryController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,3 +22,10 @@ Route::get('/detials', function () {
 Route::get('/categories', function () {
     return view('front.category');
 });
+// Route::get('/admincategories', function () {
+//     return view('back.admin.categories');
+// });
+Route::get('/supercategories', function () {
+    return view('back.admin.superCategories');
+});
+Route::resource('/admincategories', CategoryController::class, ['names' => 'admin.category']);

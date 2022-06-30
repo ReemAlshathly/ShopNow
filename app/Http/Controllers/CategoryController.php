@@ -5,17 +5,23 @@ namespace App\Http\Controllers;
 use App\Models\category;
 use App\Http\Requests\StorecategoryRequest;
 use App\Http\Requests\UpdatecategoryRequest;
-
+use App\Trait\ImageTrait;
 class CategoryController extends Controller
 {
+    use ImageTrait;
+
+   
+
     /**
+     *
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        //
+        $category=category::orderBy('id')->get();
+        return view('back.admin.superCategories')->with('categories',$category);
     }
 
     /**
@@ -36,7 +42,15 @@ class CategoryController extends Controller
      */
     public function store(StorecategoryRequest $request)
     {
-        //
+        
+       
+        
+        $category = new category();
+        $category->name=$request->name;
+        $category->image = $request->hasFile('img')? $this->saveImage($request->img, 'img/category'):"default.png";
+        if($category->save())
+            return redirect()->route('admin.category.index')->with(['successAdd'=>'done']);
+        return back()->with(['errorAdd'=>'error']);
     }
 
     /**
