@@ -64,10 +64,13 @@
                 <td>
                     <!-- Edite centered Modal -->
                    
-                    <div class="modal fade" id="verticalycentered" tabindex="-1">
+                    <div class="modal fade" id="verticalycentered{{$category->id}}" tabindex="-1">
                       <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
-                          <form>
+                          <form action="{{ route('admin.category.update', $category->id) }}"
+                                                     method="POST" enctype="multipart/form-data">
+                                                   @csrf
+                                                   @method('PATCH')>
 
                           <div class="modal-header">
                             <h5 class="modal-title">Edit Category</h5>
@@ -83,7 +86,7 @@
                                   <div class="row mb-3">
                                     <label for="inputText" class="col-sm-2 col-form-label">name</label>
                                     <div class="col-sm-10">
-                                      <input type="text" class="form-control">
+                                      <input type="text" class="form-control" value="{{$category->name}}" name="name">
                                     </div>
                                   </div>
                                   
@@ -92,8 +95,9 @@
                                   <div class="row mb-3">
                                     <label for="inputNumber" class="col-sm-2 col-form-label">Image</label>
                                     <div class="col-sm-10">
-                                      <input class="form-control" type="file" id="formFile">
-                                    </div>
+                                    <input class="dropify" type="file"  value="{{$category->image}}" name="img"> 
+                                   
+                                      </div>
                                   </div>
                                  
                                   
@@ -107,37 +111,54 @@
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn  text-white " style="background: rgb(71, 16, 16);">Save changes</button>
+                            <button type="submit" class="btn  text-white " style="background: rgb(71, 16, 16);">Save changes</button>
                           </div>
                           
                            </form><!-- End General Form Elements -->
+                          <h3 class="text-center" style="margin-top: 50px;">Laravel Multiple Image Upload Using DropzoneJS</h3><br>
+    <form method="post" action="" enctype="multipart/form-data"
+          class="dropzone" id="dropzone">
+      
+    </form>
                         </div>
                       </div>
                     </div><!-- End Edite centered Modal-->
 
                   <div class="row">
                   <div class="icon col-3">
-                    <button type="button" class="btn  text-white bi bi-pen-fill" style="background:rgb(71, 16, 16)" data-bs-toggle="modal" data-bs-target="#verticalycentered">
+                    <button type="button" class="btn  text-white bi bi-pen-fill" style="background:rgb(71, 16, 16)" data-bs-toggle="modal" data-bs-target="#verticalycentered{{$category->id}}">
                      
                      </button>
                  
                   
                 </div>
-                <div class=" col-3 icon">
-                  <button type="button" class="btn text-white ri-delete-bin-2-fill" style="background:rgb(71, 16, 16)" data-bs-toggle="modal" data-bs-target="#verticalycentered">
-                     
-                  </button>
-                  
-                  
-                </div>
-                
                 <div class="icon col-3">
-                  <button type="button" class="btn text-white  ri-delete-bin-3-fill" style="background:rgb(71, 16, 16)" data-bs-toggle="modal" data-bs-target="#verticalycentered">
+                <form action="{{ route('admin.category.destroy', $category->id) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        @if ($category->is_active == 1)
+                                                        <div class="icon col-3">
+                  <button type="submit" class="btn text-white  ri-delete-bin-3-fill" style="background:red" data-bs-toggle="modal" data-bs-target="#verticalycentered">
                      
                   </button>
                   
                   
                 </div>
+                                                            
+                                                        @else
+                                                        <div class=" col-3 icon">
+                  <button type="submit" class="btn text-white ri-delete-bin-2-fill" style="background:green" data-bs-toggle="modal" data-bs-target="#verticalycentered">
+                     
+                  </button>
+                  
+                  
+                </div>
+                                                        @endif
+                                                    </form>
+              
+</div >
+              
               </div></td>
                 
               </tr>
@@ -173,13 +194,14 @@
                                   </div>
                                   
                                  
-                                 
-                                  <div class="row mb-3">
-                                    <label for="inputNumber" class="col-sm-2 col-form-label">Image</label>
-                                    <div class="col-sm-10">
-                                      <input class="form-control" type="file" id="formFile" name="img">
-                                    </div>
-                                  </div>
+                                  <div
+                                            class="col-md-12 col-lg-6 mb-4 d-flex justify-content-center flex-column align-items-center">
+                                            <label class="label image w-100 ">Image</label>
+                                            
+                                        </div>
+                                     
+<input class="dropify" type="file" name="img"> 
+
                                  
                                   
                                  

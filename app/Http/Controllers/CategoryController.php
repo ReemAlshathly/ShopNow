@@ -47,7 +47,7 @@ class CategoryController extends Controller
         
         $category = new category();
         $category->name=$request->name;
-        $category->image = $request->hasFile('img')? $this->saveImage($request->img, 'img/category'):"default.png";
+        $category->image = $request->hasFile('img')? $this->saveImage($request->img, 'img/category'): "default.png";
         if($category->save())
             return redirect()->route('admin.category.index')->with(['successAdd'=>'done']);
         return back()->with(['errorAdd'=>'error']);
@@ -72,7 +72,7 @@ class CategoryController extends Controller
      */
     public function edit(category $category)
     {
-        //
+        
     }
 
     /**
@@ -82,9 +82,20 @@ class CategoryController extends Controller
      * @param  \App\Models\category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatecategoryRequest $request, category $category)
+    public function update(UpdatecategoryRequest $request,  $id)
     {
-        //
+        $category = category::findOrFail($id);
+        if(!$category){
+            return redirect()->back()->with(['errorEditService'=>'لا تستطيع التعديل']);
+        }else{
+            if($request->hasFile('img')){
+                $this->pic_remove($id); 
+                $category->image = $this->saveImage($request->img, 'img/category');
+            }
+            $category->update($request->except(['_token', 'img']));
+            if($category->save())
+                return redirect()->route('admin.category.index')->with(['successEdit'=>'تم التعديل بنجاح']);
+        }
     }
 
     /**
@@ -93,8 +104,13 @@ class CategoryController extends Controller
      * @param  \App\Models\category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(category $category)
+    public function destroy($categories_id)
     {
-        //
+        $category = Category::find($categories_id);
+        if(!$category)
+        return response()->view('Front.errors.404', []);
+        $category->is_active *= -1;
+        if($category->save())
+            return back();
     }
 }

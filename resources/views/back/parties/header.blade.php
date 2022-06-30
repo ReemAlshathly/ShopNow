@@ -28,8 +28,15 @@
 
   <!-- Template Main CSS File -->
   <link href="asset/css/style.css" rel="stylesheet">
+  <link href="asset/css/dropfiy.css" rel="stylesheet">
 
-  <!-- =======================================================
+  <!-- dropzone -->
+  <meta name="_token" content="{{csrf_token()}}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.0/min/dropzone.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.0/dropzone.js"></script>
+    <!-- =======================================================
   * Template Name: NiceAdmin - v2.2.2
   * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
   * Author: BootstrapMade.com
